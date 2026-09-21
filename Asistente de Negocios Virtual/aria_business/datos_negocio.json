@@ -1,0 +1,18 @@
+{
+  "contactos": {},
+  "reuniones": [],
+  "cartera_acciones": {},
+  "clientes": {},
+  "historial_busquedas": [
+    {
+      "simbolo": "AAPL",
+      "precio": 336.1300048828125,
+      "fecha": "19/09/2026 14:18"
+    },
+    {
+      "simbolo": "AAPL",
+      "precio": 336.1300048828125,
+      "fecha": "19/09/2026 15:36"
+    }
+  ]
+}
