@@ -1,7 +1,6 @@
 """
   ================================================================
          ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS         
-                    VERSIÓN COMPLETA v3.0                       
   ================================================================
 
 Proyecto: Asistente Virtual para Gestión Empresarial

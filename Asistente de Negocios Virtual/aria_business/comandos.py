@@ -380,7 +380,6 @@ class ComandosMixin:
         # Guardamos en la variable 'ayuda' un texto multilínea (usando triple comilla) con un diseño ASCII.
         ayuda = """
   ================================================================
-          ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS           
                        COMANDOS DISPONIBLES                      
   ================================================================
 
