@@ -1,5 +1,12 @@
 {
-  "contactos": {},
+  "contactos": {
+    "Eduardo": {
+      "email": "Eduardo@gmail.com",
+      "telefono": "2616827042",
+      "tipo": "cliente",
+      "fecha_agregado": "05/10/2026"
+    }
+  },
   "reuniones": [],
   "cartera_acciones": {},
   "clientes": {},

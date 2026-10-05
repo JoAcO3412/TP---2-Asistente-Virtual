@@ -2,9 +2,20 @@
 
 # Importa 'Optional' de la librería typing para indicar que una función puede devolver un texto (str) o nada (None).
 from typing import Optional
-
 # Importa pyttsx3, la librería principal para convertir texto a voz (Text-to-Speech) de forma offline.
 import pyttsx3
+
+# Esta librería le permite a Python interactuar con el sistema operativo (Windows). 
+# Trae funciones para trabajar con rutas, carpetas, archivos y variables de entorno.
+import os
+
+# está hecha para funcionar de forma asíncrona (puede esperar la respuesta del servidor sin bloquear el programa). 
+# El asistente es un programa normal, no asíncrono, así que asyncio.run(...) actúa como un puente: 
+# ejecuta esa función asíncrona y espera a que termine para seguir con el resto del código.
+import asyncio
+import tempfile # Sirve para encontrar la carpeta temporal donde se guarda la voz.
+import edge_tts # Convierte el texto en voz de Microsoft Edge.
+import pygame # Reporduce el .mp3 por los parlantes.
 
 
 # Define la clase VozMixin, que le dará capacidades de habla y escucha al AsistenteNegocios principal.
@@ -69,35 +80,28 @@ class VozMixin:
     # MÉTODO: HABLAR (TEXTO A VOZ)
     
     def hablar(self, texto: str):
-        """Convierte texto a voz y lo reproduce, usando un motor nuevo cada vez."""
-        
-        # Siempre imprime en la consola lo que el asistente va a decir (útil si estás sin sonido).
+        """Convierte texto a voz con una voz neuronal de Edge (suena natural)."""
         print(f"[{self.nombre}]: {texto}")
-        
-        # Inicia bloque try-except para evitar bloqueos del programa si falla el audio.
-        try:
-            # ¡La clave del éxito! Crea una instancia NUEVA del motor de voz para evitar el bug de Windows.
-            engine = pyttsx3.init()
-            # Ajusta la velocidad de lectura (rate) a 120 palabras por minuto.
-            engine.setProperty('rate', 120)
-            # Ajusta el volumen al máximo (1.0).
-            engine.setProperty('volume', 1.0)
-            
-            # Si se había guardado un ID de voz previamente...
-            if getattr(self, 'voz_id', None):
-                # ...le asigna esa voz específica al nuevo motor.
-                engine.setProperty('voice', self.voz_id)
 
-            # Le ordena al motor que procese el texto.
-            engine.say(texto)
-            # Ejecuta la acción de hablar y espera a que termine de decir la última palabra.
-            engine.runAndWait()
-            # Detiene y limpia este motor temporal.
-            engine.stop()
-            
-        # Captura errores del motor de audio (ej. dispositivo de salida desconectado).
+        try:
+            archivo = os.path.join(tempfile.gettempdir(), "aria_voz.mp3")
+
+            # Voz Mexicana neutra femenina. Rate sube o baja la velocidad.
+            asyncio.run(
+                edge_tts.Communicate(texto, "es-MX-DaliaNeural", rate="+10%").save(archivo)
+            )
+
+            pygame.mixer.init()
+            pygame.mixer.music.load(archivo)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                pygame.time.Clock().tick(10)
+            pygame.mixer.music.unload()
+            pygame.mixer.quit()
+
         except Exception as e:
             print(f"   [Error de voz: {e}]")
+
 
     # MÉTODO: ESCUCHAR (VOZ A TEXTO)
     

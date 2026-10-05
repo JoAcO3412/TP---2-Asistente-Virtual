@@ -17,9 +17,8 @@ class UtilidadesMixin:
     # Breve descripción de la clase.
     """Mixin con funciones auxiliares que no son estrictamente de negocio."""
 
-    # ---------------------------------------------------------
     # MÉTODO: OBTENER FECHA Y HORA
-    # ---------------------------------------------------------
+    
     def obtener_fecha_hora(self):
         # Cadena de documentación del método.
         """Informa la fecha y hora actual del sistema."""
@@ -45,7 +44,7 @@ class UtilidadesMixin:
 
         # Imprimimos un cuadro decorativo en la terminal con los datos obtenidos.
         print("\n" + "="*60)
-        print("🕐 FECHA Y HORA ACTUAL")
+        print("FECHA Y HORA ACTUAL")
         print("="*60)
         print(f"Fecha: {fecha_texto}")
         print(f"Hora: {hora_texto}")
@@ -57,9 +56,8 @@ class UtilidadesMixin:
         # Retorna un diccionario con los datos por si algún otro método del asistente los necesita.
         return {'fecha': fecha_texto, 'hora': hora_texto}
 
-    # ---------------------------------------------------------
     # MÉTODO: REPRODUCIR CANCIÓN EN YOUTUBE
-    # ---------------------------------------------------------
+    
     def reproducir_cancion(self, cancion: str):
         # Cadena de documentación.
         """Busca y reproduce una canción en YouTube usando pywhatkit."""
@@ -73,7 +71,7 @@ class UtilidadesMixin:
         try:
             # El asistente avisa por voz y por consola lo que está a punto de hacer.
             self.hablar(f"Reproduciendo {cancion} en YouTube...")
-            print(f"\n🎵 Reproduciendo: {cancion}\n")
+            print(f"\nReproduciendo: {cancion}\n")
 
             # Usamos la función playonyt de pywhatkit (kit) que abre el navegador, busca la canción y le da play.
             kit.playonyt(cancion)
@@ -83,9 +81,8 @@ class UtilidadesMixin:
             # El asistente nos avisa por voz que falló y nos da el detalle técnico del error.
             self.hablar(f"Error al reproducir la canción: {str(e)}")
 
-    # ---------------------------------------------------------
     # MÉTODO: CONTAR UN CHISTE
-    # ---------------------------------------------------------
+    
     def contar_chiste(self):
         # Cadena de documentación.
         """Cuenta un chiste aleatorio usando pyjokes para relajar el ambiente laboral."""
@@ -100,7 +97,7 @@ class UtilidadesMixin:
 
         # Imprime el chiste en la consola con un formato limpio.
         print("\n" + "="*60)
-        print("😂 CHISTE DEL DÍA")
+        print("CHISTE DEL DÍA")
         print("="*60)
         print(chiste)
         print("="*60 + "\n")
@@ -108,9 +105,8 @@ class UtilidadesMixin:
         # El asistente lo lee en voz alta.
         self.hablar(chiste)
 
-    # ---------------------------------------------------------
     # MÉTODO: ABRIR SITIO WEB
-    # ---------------------------------------------------------
+    
     def abrir_sitio_web(self, sitio: str):
         # Cadena de documentación.
         """Abre un sitio web en el navegador predeterminado."""
@@ -128,7 +124,7 @@ class UtilidadesMixin:
 
             # Avisa por voz y consola que está procediendo a abrir la página.
             self.hablar(f"Abriendo {sitio}...")
-            print(f"\n🌐 Abriendo sitio web: {sitio}\n")
+            print(f"\nAbriendo sitio web: {sitio}\n")
 
             # Usa el módulo estándar webbrowser para abrir el enlace en tu navegador predeterminado (Chrome, Edge, etc.).
             webbrowser.open(sitio)
