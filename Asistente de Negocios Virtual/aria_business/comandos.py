@@ -379,61 +379,62 @@ class ComandosMixin:
         
         # Guardamos en la variable 'ayuda' un texto multilínea (usando triple comilla) con un diseño ASCII.
         ayuda = """
-╔════════════════════════════════════════════════════════════════╗
-║        ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS           ║
-║                      COMANDOS DISPONIBLES                      ║
-╠════════════════════════════════════════════════════════════════╣
-║                                                                ║
-║     ANÁLISIS FINANCIERO:                                        ║
-║    • "Precio de AAPL" / "Cotización de MSFT"                   ║
-║    • "Analizar múltiples" (varias acciones a la vez)           ║
-║    • "Comparar AAPL vs MSFT" (incluye P/E ratio)               ║
-║    • "Historial" de AAPL (1d, 5d, 1mo, 3mo, 6mo, 1y, 5y)       ║
-║                                                                ║
-║     CARTERA DE INVERSIONES:                                     ║
-║    • "Agregar a mi cartera" (guarda la posición)               ║
-║    • "Analizar cartera" / "Mis acciones"                       ║
-║                                                                ║
-║     ÍNDICES Y SECTORES:                                         ║
-║    • "Ver índices" (S&P 500, Nasdaq, Dow, IBEX, DAX...)       ║
-║    • "Analizar sector [tecnología/bancario/salud/energía...]" ║
-║                                                                ║
-║     CÁLCULOS EMPRESARIALES:                                     ║
-║    • "Calcular margen" (costo y precio de venta)               ║
-║    • "Calcular ROI" (retorno sobre inversión)                 ║
-║    • "Punto de equilibrio"                                    ║
-║    • "Proyectar ingresos"                                     ║
-║    • "Convertir moneda" (USD a EUR, etc.)                     ║
-║                                                                ║
-║     GESTIÓN DE CONTACTOS:                                       ║
-║    • "Agregar contacto"                                       ║
-║    • "Ver mis contactos"                                      ║
-║    • "Buscar contacto"                                        ║
-║                                                                ║
-║     GESTIÓN DE REUNIONES:                                       ║
-║    • "Agendar reunión"                                        ║
-║    • "Ver mis reuniones"                                      ║
-║                                                                ║
-║     INVESTIGACIÓN EMPRESARIAL:                                  ║
-║    • "Investigar [empresa]"                                   ║
-║                                                                ║
-║     UTILIDAD Y ENTRETENIMIENTO:                                 ║
-║    • "Qué hora es" / "Fecha de hoy"                           ║
-║    • "Reproducir [canción]" (la pone en YouTube)              ║
-║    • "Cuéntame un chiste"                                     ║
-║    • "Abrir sitio [url]" (abre una página web)                ║
-║                                                                ║
-║     ACCIONES POPULARES POR SECTOR:                              ║
-║    TECNOLOGÍA: AAPL, MSFT, GOOGL, META, NVDA, TSLA            ║
-║    BANCARIO: JPM, BAC, WFC, GS                                ║
-║    SALUD: UNH, JNJ, PFE, ABBV                                 ║
-║    ENERGÍA: XOM, CVX, SLB, MPC                                ║
-║    RETAIL: AMZN, WMT, TM                                      ║
-║                                                                ║
-║ SALIR:                                                      ║
-║    • "Adiós"                                                  ║
-║                                                                ║
-╚════════════════════════════════════════════════════════════════╝
+  ================================================================
+          ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS           
+                       COMANDOS DISPONIBLES                      
+  ================================================================
+
+                                                                 
+      ANÁLISIS FINANCIERO:                                        
+     • "Precio de AAPL" / "Cotización de MSFT"                   
+     • "Analizar múltiples" (varias acciones a la vez)           
+     • "Comparar AAPL vs MSFT" (incluye P/E ratio)               
+     • "Historial" de AAPL (1d, 5d, 1mo, 3mo, 6mo, 1y, 5y)       
+                                                                 
+      CARTERA DE INVERSIONES:                                     
+     • "Agregar a mi cartera" (guarda la posición)               
+     • "Analizar cartera" / "Mis acciones"                       
+                                                                 
+      ÍNDICES Y SECTORES:                                         
+     • "Ver índices" (S&P 500, Nasdaq, Dow, IBEX, DAX...)       
+     • "Analizar sector [tecnología/bancario/salud/energía...]" 
+                                                                 
+      CÁLCULOS EMPRESARIALES:                                     
+     • "Calcular margen" (costo y precio de venta)               
+     • "Calcular ROI" (retorno sobre inversión)                 
+     • "Punto de equilibrio"                                    
+     • "Proyectar ingresos"                                     
+     • "Convertir moneda" (USD a EUR, etc.)                     
+                                                                 
+      GESTIÓN DE CONTACTOS:                                       
+     • "Agregar contacto"                                       
+     • "Ver mis contactos"                                      
+     • "Buscar contacto"                                        
+                                                                 
+      GESTIÓN DE REUNIONES:                                       
+     • "Agendar reunión"                                        
+     • "Ver mis reuniones"                                      
+                                                                 
+      INVESTIGACIÓN EMPRESARIAL:                                  
+     • "Investigar [empresa]"                                   
+                                                                 
+      UTILIDAD Y ENTRETENIMIENTO:                                 
+     • "Qué hora es" / "Fecha de hoy"                           
+     • "Reproducir [canción]" (la pone en YouTube)              
+     • "Cuéntame un chiste"                                     
+     • "Abrir sitio [url]" (abre una página web)                
+                                                                 
+      ACCIONES POPULARES POR SECTOR:                              
+     TECNOLOGÍA: AAPL, MSFT, GOOGL, META, NVDA, TSLA            
+     BANCARIO: JPM, BAC, WFC, GS                                
+     SALUD: UNH, JNJ, PFE, ABBV                                 
+     ENERGÍA: XOM, CVX, SLB, MPC                                
+     RETAIL: AMZN, WMT, TM                                      
+                                                                 
+  SALIR:                                                      
+     • "Adiós"                                                  
+                                                                 
+ =================================================================
         """
         # Imprimimos la variable 'ayuda' en la terminal para que el usuario la vea.
         print(ayuda)

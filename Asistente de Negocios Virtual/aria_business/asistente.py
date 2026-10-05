@@ -1,8 +1,8 @@
 """
-╔═══════════════════════════════════════════════════════════════╗
-║          ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS         ║
-║                    VERSIÓN COMPLETA v3.0                       ║
-╚═══════════════════════════════════════════════════════════════╝
+  ================================================================
+         ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS         
+                    VERSIÓN COMPLETA v3.0                       
+  ================================================================
 
 Proyecto: Asistente Virtual para Gestión Empresarial
 Descripción: Sistema inteligente de automatización para empresarios,
@@ -12,23 +12,23 @@ Rubro: NEGOCIOS Y GESTIÓN EMPRESARIAL
 Aplicabilidad: Asistente para Ejecutivos y Emprendedores
 
 FUNCIONALIDADES PRINCIPALES:
-✓ Análisis financiero en tiempo real (acciones individuales y múltiples)
-✓ Comparación detallada de acciones (precio, P/E)
-✓ Historial de precios por período (1d, 5d, 1mo, 3mo, 6mo, 1y, 5y)
-✓ Gestión y análisis de cartera de inversiones (persistente)
-✓ Índices bursátiles principales (S&P 500, Nasdaq, Dow, IBEX, DAX, FTSE, Nikkei)
-✓ Análisis de sectores (tecnología, bancario, salud, energía, retail, consumo)
-✓ Cálculos empresariales (margen, ROI, punto de equilibrio, proyecciones)
-✓ Conversión de monedas
-✓ Gestión de contactos comerciales
-✓ Gestión de reuniones y agendas
-✓ Investigación de empresas e industrias (Wikipedia)
-✓ Persistencia de datos en JSON
-✓ Interfaz por voz (síntesis y reconocimiento) y por texto
-✓ Hora y fecha actual
-✓ Reproducción de canciones en YouTube (vía pywhatkit)
-✓ Chistes para relajar el ambiente laboral (vía pyjokes)
-✓ Apertura de sitios web (vía webbrowser)
+ Análisis financiero en tiempo real (acciones individuales y múltiples)
+ Comparación detallada de acciones (precio, P/E)
+ Historial de precios por período (1d, 5d, 1mo, 3mo, 6mo, 1y, 5y)
+ Gestión y análisis de cartera de inversiones (persistente)
+ Índices bursátiles principales (S&P 500, Nasdaq, Dow, IBEX, DAX, FTSE, Nikkei)
+ Análisis de sectores (tecnología, bancario, salud, energía, retail, consumo)
+ Cálculos empresariales (margen, ROI, punto de equilibrio, proyecciones)
+ Conversión de monedas
+ Gestión de contactos comerciales
+ Gestión de reuniones y agendas
+ Investigación de empresas e industrias (Wikipedia)
+ Persistencia de datos en JSON
+ Interfaz por voz (síntesis y reconocimiento) y por texto
+ Hora y fecha actual
+ Reproducción de canciones en YouTube (vía pywhatkit)
+ Chistes para relajar el ambiente laboral (vía pyjokes)
+ Apertura de sitios web (vía webbrowser)
 
 Este módulo define la clase AsistenteNegocios, que arma todas las
 funcionalidades a partir de mixins organizados por carpetas:

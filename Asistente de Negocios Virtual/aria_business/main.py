@@ -9,11 +9,11 @@ except ImportError:
 
 def main():
     """Función principal del programa."""
-    print("\n" + "╔" + "═"*66 + "╗")
-    print("║" + " "*66 + "║")
-    print("║" + "  ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS".center(66) + "║")
-    print("║" + " "*66 + "║")
-    print("╚" + "═"*66 + "╝\n")
+    print("\n" + "="*66)
+    print(" "*66)
+    print("ASISTENTE VIRTUAL DE NEGOCIOS - ARIA BUSINESS".center(66))
+    print(" "*66)
+    print("="*66)
 
     nombre_empresa = input("¿Cuál es el nombre de tu empresa? ").strip() or "Mi Empresa"
 
