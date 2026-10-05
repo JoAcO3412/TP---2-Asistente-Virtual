@@ -7,7 +7,16 @@
       "fecha_agregado": "05/10/2026"
     }
   },
-  "reuniones": [],
+  "reuniones": [
+    {
+      "titulo": "reunion de congreso CACIC",
+      "fecha": "07/10/2026",
+      "hora": "18:00",
+      "participantes": "Joaquin Devige, ignacio silvestre, agustin fiores",
+      "notas": "no",
+      "estado": "programada"
+    }
+  ],
   "cartera_acciones": {},
   "clientes": {},
   "historial_busquedas": [
@@ -20,6 +29,11 @@
       "simbolo": "AAPL",
       "precio": 336.1300048828125,
       "fecha": "19/09/2026 15:36"
+    },
+    {
+      "simbolo": "AAPL",
+      "precio": 332.9419860839844,
+      "fecha": "05/10/2026 16:43"
     }
   ]
 }

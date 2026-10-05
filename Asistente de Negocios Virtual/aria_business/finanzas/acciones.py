@@ -93,7 +93,7 @@ class AccionesMixin:
         self.hablar("¿Cuántas acciones deseas analizar?")
         try:
             # Convierte la entrada del usuario a un número entero (int).
-            cantidad = int(input("[Tú]: Cantidad: "))
+            cantidad = int(self.pedir("[Tú]: Cantidad: "))
         # Si el usuario escribe letras en vez de un número...
         except ValueError:
             self.hablar("Error en la entrada")
@@ -104,7 +104,7 @@ class AccionesMixin:
         # Inicia un bucle que se repite tantas veces como 'cantidad' indicó el usuario.
         for i in range(cantidad):
             # Pide el símbolo, quita espacios (.strip()) y lo pasa a mayúsculas (.upper()).
-            simbolo = input(f"[Tú]: Acción {i + 1} (símbolo): ").strip().upper()
+            simbolo = self.pedir(f"[Tú]: Acción {i + 1} (símbolo): ").strip().upper()
             if simbolo:
                 # Si el usuario ingresó algo, lo añade a la lista.
                 simbolos.append(simbolo)

@@ -1,10 +1,21 @@
 # Importamos la librería estándar 'time' para poder hacer pausas (delays) en el código.
 import time
 
+class SalirAsistente(Exception):
+    """Se lanza cuando el usuario escribe 'salir' en cualquier pregunta."""
+    pass
+
 # Definimos una clase llamada ComandosMixin. Se usa como "Mixin" para agregar esta funcionalidad a una clase principal.
 class ComandosMixin:
     """Mixin que interpreta comandos de texto/voz y coordina al resto de mixins."""
-
+    
+    def pedir(self, mensaje: str) -> str:
+        """Hace una pregunta por consola. Si el usuario escribe 'salir', cierra el asistente."""
+        texto = input(mensaje)
+        if texto.strip().lower() in ["salir", "adiós", "adios"]:
+            raise SalirAsistente()
+        return texto
+    
     def procesar_comando(self, comando: str):
         """Interpreta el comando de texto (o voz) del usuario y ejecuta la acción."""
         
@@ -30,7 +41,7 @@ class ComandosMixin:
                                          "poner música", "poner musica"]):
             self.hablar("¿Qué canción quieres escuchar?")
             # Pide al usuario por consola que escriba qué canción quiere y elimina espacios sobrantes con .strip().
-            cancion = input("[Tú]: Escribe la canción: ").strip()
+            cancion = self.pedir("[Tú]: Escribe la canción: ").strip()
             # Si el usuario escribió algo (la variable no está vacía)...
             if cancion:
                 # ...llama al método para reproducir esa canción.
@@ -51,7 +62,7 @@ class ComandosMixin:
                                          "abrir web", "ir a la página", "ir a la pagina"]):
             self.hablar("¿Que sitio web querés abrir?")
             # Pide al usuario que escriba la dirección o nombre del sitio y limpia los espacios.
-            sitio = input("[Tú]: ¿Qué sitio web querés abrir? ").strip()
+            sitio = self.pedir("[Tú]: ¿Qué sitio web querés abrir? ").strip()
             # Si el usuario ingresó un sitio válido...
             if sitio:
                 # ...llama al método para abrir el navegador en ese sitio.
@@ -68,7 +79,7 @@ class ComandosMixin:
                     
             self.hablar("¿De qué acción quieres saber el precio?")
             # Pide el símbolo de la acción, quita espacios y lo convierte a MAYÚSCULAS con .upper().
-            simbolo = input("[Tú]: Símbolo de la acción (AAPL, MSFT, GOOGL, etc.): ").strip().upper()
+            simbolo = self.pedir("[Tú]: Símbolo de la acción (AAPL, MSFT, GOOGL, etc.): ").strip().upper()
             # Si se ingresó un símbolo...
             if simbolo:
                 # ...llama al método que busca el precio de esa acción específica.
@@ -87,11 +98,11 @@ class ComandosMixin:
         elif "historial" in comando:
             self.hablar("¿De qué símbolo quieres ver el historial?")
             # Pide el símbolo de la acción (en mayúsculas).
-            simbolo = input("[Tú]: ¿Símbolo?: ").strip().upper()
+            simbolo = self.pedir("[Tú]: ¿Símbolo?: ").strip().upper()
             
             self.hablar("¿Para qué período? Por ejemplo, un mes, seis meses o un año.")
             # Pide el período de tiempo; si el usuario presiona Enter sin escribir nada, usa '1mo' (1 mes) por defecto.
-            periodo = input("[Tú]: ¿Período? (1d, 5d, 1mo, 3mo, 6mo, 1y, 5y): ").strip() or '1mo'
+            periodo = self.pedir("[Tú]: ¿Período? (1d, 5d, 1mo, 3mo, 6mo, 1y, 5y): ").strip() or '1mo'
             # Si se ingresó un símbolo...
             if simbolo:
                 # ...llama al método que obtiene el historial de precios para ese período.
@@ -109,7 +120,7 @@ class ComandosMixin:
             else:
                 self.hablar("¿Cuál índice deseas consultar?")
                 # ...pide que confirme qué índice quiere ver.
-                indice = input("[Tú]: ¿Cuál índice? (sp500, nasdaq, dow, ibex, dax, ftse, nikkei): ").strip()
+                indice = self.pedir("[Tú]: ¿Cuál índice? (sp500, nasdaq, dow, ibex, dax, ftse, nikkei): ").strip()
                 # Si ingresó un índice válido...
                 if indice:
                     # ...llama al método para buscar ese índice específico.
@@ -122,7 +133,7 @@ class ComandosMixin:
                 and "información de empresa" not in comando:
             self.hablar("¿Qué sector deseas analizar?")
             # Pide al usuario que ingrese el nombre del sector.
-            sector = input("[Tú]: ¿Qué sector? (tecnología, bancario, salud, energía, retail, bienes de consumo): ").strip()
+            sector = self.pedir("[Tú]: ¿Qué sector? (tecnología, bancario, salud, energía, retail, bienes de consumo): ").strip()
             # Si ingresó un sector...
             if sector:
                 # ...llama al método que analiza dicho sector.
@@ -134,16 +145,16 @@ class ComandosMixin:
         elif any(p in comando for p in ["agregar a mi cartera", "agregar posición", "agregar accion a cartera"]):
             self.hablar("¿Cuál es el símbolo de la acción a agregar?")
             # Pide el símbolo de la acción.
-            simbolo = input("[Tú]: Símbolo: ").strip().upper()
+            simbolo = self.pedir("[Tú]: Símbolo: ").strip().upper()
             # Inicia un bloque de prueba para capturar errores si el usuario escribe texto en vez de números.
             try:
                 self.hablar("¿Qué cantidad de acciones compraste?")
                 # Pide la cantidad de acciones y la convierte a número decimal (float).
-                cantidad = float(input("[Tú]: Cantidad de acciones: "))
+                cantidad = float(self.pedir("[Tú]: Cantidad de acciones: "))
                 
                 self.hablar("¿A qué precio de compra?")
                 # Pide el precio de compra y lo convierte a número decimal (float).
-                precio_compra = float(input("[Tú]: Precio de compra: "))
+                precio_compra = float(self.pedir("[Tú]: Precio de compra: "))
                 # Llama al método para guardar estos datos en la cartera del usuario.
                 self.agregar_posicion_cartera(simbolo, cantidad, precio_compra)
             # Si la conversión a 'float' falla (ej: el usuario escribió "cinco")...
@@ -162,11 +173,11 @@ class ComandosMixin:
         elif any(p in comando for p in ["compara", "comparar", "versus", " vs "]):
             self.hablar("¿Cuál es la primera acción?")
             # Pide el símbolo de la primera acción a comparar.
-            sym1 = input("[Tú]: Primera acción: ").strip().upper()
+            sym1 = self.pedir("[Tú]: Primera acción: ").strip().upper()
             
             self.hablar("¿Y con cuál la quieres comparar?")
             # Pide el símbolo de la segunda acción a comparar.
-            sym2 = input("[Tú]: Segunda acción: ").strip().upper()
+            sym2 = self.pedir("[Tú]: Segunda acción: ").strip().upper()
             
             # Si ambos símbolos fueron ingresados...
             if sym1 and sym2:
@@ -181,11 +192,11 @@ class ComandosMixin:
             try:
                 self.hablar("Por favor, ingresa el costo unitario.")
                 # Pide y convierte a decimal el costo de un producto.
-                costo = float(input("[Tú]: Costo unitario: "))
+                costo = float(self.pedir("[Tú]: Costo unitario: "))
                 
                 self.hablar("Ahora ingresa el precio de venta.")
                 # Pide y convierte a decimal el precio al que se vende.
-                precio = float(input("[Tú]: Precio de venta: "))
+                precio = float(self.pedir("[Tú]: Precio de venta: "))
                 # Calcula y muestra el margen de ganancia.
                 self.calcular_margen_ganancia(costo, precio)
             # Si el usuario no ingresó números válidos...
@@ -200,11 +211,11 @@ class ComandosMixin:
             try:
                 self.hablar("Ingresa la inversión inicial.")
                 # Pide el monto inicial invertido.
-                inversion = float(input("[Tú]: Inversión inicial: "))
+                inversion = float(self.pedir("[Tú]: Inversión inicial: "))
                 
                 self.hablar("Ingresa la ganancia neta.")
                 # Pide cuánto dinero se ganó en neto.
-                ganancia = float(input("[Tú]: Ganancia neta: "))
+                ganancia = float(self.pedir("[Tú]: Ganancia neta: "))
                 # Ejecuta la fórmula del ROI.
                 self.calcular_roi(inversion, ganancia)
             except ValueError:
@@ -217,15 +228,15 @@ class ComandosMixin:
             try:
                 self.hablar("Ingresa los costos fijos.")
                 # Pide los gastos fijos mensuales/anuales.
-                costos_fijos = float(input("[Tú]: Costos fijos: "))
+                costos_fijos = float(self.pedir("[Tú]: Costos fijos: "))
                 
                 self.hablar("Ingresa el margen unitario.")
                 # Pide cuánto se gana por cada unidad vendida.
-                margen = float(input("[Tú]: Margen unitario: "))
+                margen = float(self.pedir("[Tú]: Margen unitario: "))
                 
                 self.hablar("Por último, ingresa el precio unitario.")
                 # Pide el precio al público de cada unidad.
-                precio = float(input("[Tú]: Precio unitario: "))
+                precio = float(self.pedir("[Tú]: Precio unitario: "))
                 
                 # Calcula cuántas unidades hay que vender para no perder dinero.
                 self.calcular_punto_equilibrio(costos_fijos, margen, precio)
@@ -239,15 +250,15 @@ class ComandosMixin:
             try:
                 self.hablar("Ingresa los ingresos actuales.")
                 # Pide el nivel de ingresos que se tiene hoy.
-                ingresos = float(input("[Tú]: Ingresos actuales: "))
+                ingresos = float(self.pedir("[Tú]: Ingresos actuales: "))
                 
                 self.hablar("Ingresa la tasa de crecimiento estimada en porcentaje.")
                 # Pide el porcentaje estimado de crecimiento.
-                tasa = float(input("[Tú]: Tasa de crecimiento (%): "))
+                tasa = float(self.pedir("[Tú]: Tasa de crecimiento (%): "))
                 
                 self.hablar("¿Para cuántos períodos?")
                 # Pide por cuántos meses/años se quiere proyectar (como entero 'int').
-                periodos = int(input("[Tú]: Número de períodos: "))
+                periodos = int(self.pedir("[Tú]: Número de períodos: "))
                 # Ejecuta el cálculo de crecimiento compuesto.
                 self.proyectar_ingresos(ingresos, tasa, periodos)
             except ValueError:
@@ -259,15 +270,15 @@ class ComandosMixin:
             try:
                 self.hablar("¿Qué cantidad deseas convertir?")
                 # Pide la cantidad de dinero a convertir.
-                cantidad = float(input("[Tú]: Cantidad: "))
+                cantidad = float(self.pedir("[Tú]: Cantidad: "))
                 
                 self.hablar("¿Cuál es la moneda de origen?")
                 # Pide el código de la moneda que tiene actualmente el usuario.
-                origen = input("[Tú]: Moneda origen (USD, EUR, MXN, ARS, etc.): ").strip().upper()
+                origen = self.pedir("[Tú]: Moneda origen (USD, EUR, MXN, ARS, etc.): ").strip().upper()
                 
                 self.hablar("¿A qué moneda deseas convertirla?")
                 # Pide el código de la moneda a la que quiere cambiar.
-                destino = input("[Tú]: Moneda destino: ").strip().upper()
+                destino = self.pedir("[Tú]: Moneda destino: ").strip().upper()
                 # Llama al método que hace el tipo de cambio.
                 self.convertir_moneda(cantidad, origen, destino)
             except ValueError:
@@ -278,16 +289,16 @@ class ComandosMixin:
         elif any(p in comando for p in ["agregar contacto", "nuevo contacto"]):
             self.hablar("¿Cuál es el nombre del contacto?")
             # Pide nombre, correo, teléfono y el rol de esa persona.
-            nombre = input("[Tú]: Nombre: ").strip()
+            nombre = self.pedir("[Tú]: Nombre: ").strip()
             
             self.hablar("¿Cuál es su correo electrónico?")
-            email = input("[Tú]: Email: ").strip()
+            email = self.pedir("[Tú]: Email: ").strip()
             
             self.hablar("¿Cuál es su teléfono?")
-            telefono = input("[Tú]: Teléfono: ").strip()
+            telefono = self.pedir("[Tú]: Teléfono: ").strip()
             
             self.hablar("¿Qué tipo de contacto es? Por ejemplo, cliente, proveedor o socio.")
-            tipo = input("[Tú]: Tipo (cliente/proveedor/socio): ").strip()
+            tipo = self.pedir("[Tú]: Tipo (cliente/proveedor/socio): ").strip()
             
             # Guarda los datos en la libreta de direcciones.
             self.agregar_contacto(nombre, email, telefono, tipo)
@@ -301,7 +312,7 @@ class ComandosMixin:
         elif any(p in comando for p in ["buscar contacto", "encontrar contacto"]):
             self.hablar("¿Cómo se llama el contacto que buscas?")
             # Pide el nombre de la persona a buscar.
-            nombre = input("[Tú]: ¿Qué contacto buscas? ").strip()
+            nombre = self.pedir("[Tú]: ¿Qué contacto buscas? ").strip()
             # Busca y muestra la información de ese contacto.
             self.buscar_contacto(nombre)
 
@@ -310,19 +321,19 @@ class ComandosMixin:
         elif any(p in comando for p in ["agendar", "reunión", "reunion", "programar reunión", "programar reunion"]):
             self.hablar("Vamos a agendar la reunión. ¿Cuál es el título?")
             # Pide los detalles del evento (título, fecha, hora, con quién, anotaciones).
-            titulo = input("[Tú]: Título de reunión: ").strip()
+            titulo = self.pedir("[Tú]: Título de reunión: ").strip()
             
             self.hablar("¿Para qué fecha?")
-            fecha = input("[Tú]: Fecha (DD/MM/YYYY): ").strip()
+            fecha = self.pedir("[Tú]: Fecha (DD/MM/YYYY): ").strip()
             
             self.hablar("¿A qué hora?")
-            hora = input("[Tú]: Hora (HH:MM): ").strip()
+            hora = self.pedir("[Tú]: Hora (HH:MM): ").strip()
             
             self.hablar("¿Quiénes son los participantes?")
-            participantes = input("[Tú]: Participantes: ").strip()
+            participantes = self.pedir("[Tú]: Participantes: ").strip()
             
             self.hablar("¿Deseas agregar alguna nota opcional?")
-            notas = input("[Tú]: Notas (opcional): ").strip()
+            notas = self.pedir("[Tú]: Notas (opcional): ").strip()
             
             # Guarda la reunión en el sistema.
             self.agendar_reunion(titulo, fecha, hora, participantes, notas)
@@ -337,7 +348,7 @@ class ComandosMixin:
         elif any(p in comando for p in ["investiga", "investigar", "información de empresa", "informacion de empresa"]):
             self.hablar("¿Sobre qué empresa quieres investigar?")
             # Pide el nombre de la empresa a buscar.
-            empresa = input("[Tú]: ¿Qué empresa? ").strip()
+            empresa = self.pedir("[Tú]: ¿Qué empresa? ").strip()
             # Llama al método que recopila los datos de la empresa.
             self.investigar_empresa(empresa)
 
@@ -452,8 +463,7 @@ class ComandosMixin:
         self.mostrar_ayuda()
 
         # Pregunta al usuario si quiere usar el micrófono o el teclado. .strip() quita espacios, .lower() pasa a minúscula.
-        modo = input("\n[Tú]: ¿Querés dar los comandos por VOZ o por TEXTO? (voz/texto): ").strip().lower()
-        # Si la respuesta empieza con la letra 'v' (ej: "voz", "v"), la variable modo_voz será True. Si no, False.
+        modo = input("\n[Tú]: ¿Querés dar los comandos por VOZ o por TEXTO? (voz/texto): ").strip().lower()        # Si la respuesta empieza con la letra 'v' (ej: "voz", "v"), la variable modo_voz será True. Si no, False.
         modo_voz = modo.startswith("v")
 
         # Verifica qué modo eligió el usuario.
@@ -475,7 +485,7 @@ class ComandosMixin:
                 # Si eligió escribir...
                 else:
                     # ...espera a que el usuario escriba en la consola, quita espacios extra y lo pasa a minúsculas.
-                    comando = input("\n[Tú]: ").strip().lower()
+                    comando = self.pedir("\n[Tú]: ").strip().lower()
 
                 # Si se detectó algún comando válido (no está vacío)...
                 if comando:
@@ -484,6 +494,10 @@ class ComandosMixin:
                 
                 # Pausa de 0.3 segundos al final de cada ciclo para no saturar el procesador de la computadora.
                 time.sleep(0.3)
+                
+            except SalirAsistente:
+                self.hablar("Hasta luego. Que tengas éxito en tus negocios.")
+                self.en_ejecucion = False
                 
             # Si el usuario presiona Ctrl + C en la terminal (Interrupción por teclado)...
             except KeyboardInterrupt:
