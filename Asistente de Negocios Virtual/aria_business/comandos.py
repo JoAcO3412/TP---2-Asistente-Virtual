@@ -462,17 +462,25 @@ class ComandosMixin:
         # Muestra automáticamente la lista de comandos al arrancar.
         self.mostrar_ayuda()
 
-        # Pregunta al usuario si quiere usar el micrófono o el teclado. .strip() quita espacios, .lower() pasa a minúscula.
-        modo = input("\n[Tú]: ¿Querés dar los comandos por VOZ o por TEXTO? (voz/texto): ").strip().lower()        # Si la respuesta empieza con la letra 'v' (ej: "voz", "v"), la variable modo_voz será True. Si no, False.
-        modo_voz = modo.startswith("v")
-
-        # Verifica qué modo eligió el usuario.
-        if modo_voz:
-            # Da instrucciones para el uso por micrófono.
-            self.hablar("Perfecto, te voy a escuchar por el micrófono. Decime un comando cuando quieras.")
-        else:
-            # Da confirmación del uso por teclado.
-            self.hablar("Perfecto, vamos a trabajar por texto.")
+        while True:
+            # Pregunta al usuario si quiere usar el micrófono o el teclado. .strip() quita espacios, .lower() pasa a minúscula.
+            modo = input("\n[Tú]: ¿Querés dar los comandos por VOZ o por TEXTO? (voz/texto): ").strip().lower()
+            
+            # Verifica si el usuario escribió exactamente "voz" o la letra "v".
+            if modo in ["voz", "v"]:
+                modo_voz = True
+                self.hablar("Perfecto, te voy a escuchar por el micrófono. Decime un comando cuando quieras.")
+                break # Rompe el bucle porque la entrada fue correcta.
+                
+            # Verifica si el usuario escribió exactamente "texto" o la letra "t".
+            elif modo in ["texto", "t"]:
+                modo_voz = False
+                self.hablar("Perfecto, vamos a trabajar por texto.")
+                break # Rompe el bucle porque la entrada fue correcta.
+                
+            # Si el usuario escribió cualquier otra cosa que no sea las opciones de arriba...
+            else:
+                self.hablar("No reconozco esa opción. Por favor, escribe la palabra voz, o la palabra texto.")
 
         # COMIENZA EL BUCLE PRINCIPAL (Game Loop). Este while se repetirá infinitamente hasta que 'en_ejecucion' sea False.
         while self.en_ejecucion:
